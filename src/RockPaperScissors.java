@@ -27,6 +27,8 @@ public class RockPaperScissors {
          int gameCount = input.nextInt();
 
          for(int i = 0; i < gameCount; i++){
+
+             System.out.println("Current attempt is " + (i + 1) + " ---- " + gameCount);
              // compyuterni random tanlashini qilish
              // random son generatsiya qilish
              int generatedRanNumber = random.nextInt(0, 3);
@@ -63,6 +65,7 @@ public class RockPaperScissors {
                      result = LOSE;
                      loseCount++;
                  }else {
+
                      result = DRAW;
                      drawCount++;
                  }
