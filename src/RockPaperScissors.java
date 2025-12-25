@@ -17,52 +17,30 @@ public class RockPaperScissors {
     private static int drawCount = 0;
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
          int i = 1;
 
         while (true) {
-
             System.out.println("Current attempt is " + i);
 
            String computerChoice = computerChoice();
 
            String playerChoice = playerChoice();
 
-
             if (playerChoice.equals(INVALID_CHOICE_NUMBER)) {
                 System.out.println("You have picked an invalid choice.");
                 return;
             }
-
-            String result = "";
-            if (playerChoice.equals(ROCK))
-                result = resultForPlayerChoiceRock(computerChoice);
-            else if (playerChoice.equals(SCISSORS))
-                result = resultForPlayerChoiceScissors(computerChoice);
-            else result = resultForPlayerChoicePaper(computerChoice);
+            String result = finalResult(playerChoice, computerChoice);
 
             info(playerChoice, computerChoice, result);
 
-
-
-            System.out.print("Want to continue ... (1 - Yes, 0 - No) ");
-
-
-
-            int continueGame = input.nextInt();
+            int continueGame = continueTheGame();
             if(continueGame == 0){
                 break;
             }
             i++;
-
-
-
-            // rock vs rock = draw; rock vs scissors = win; rock vs paper = lose;
         }
         finalResultInfo();
-
-
-
     }
     public static String computerChoice(){
         int generatedRanNumber = random.nextInt(0, 3);
@@ -146,6 +124,18 @@ public class RockPaperScissors {
         }else{
             System.out.println("OOPSSSSS! You lose😥😥😥😥😥");
         }
+    }
+    public static int continueTheGame(){
+        Scanner scannerForInt = new Scanner(System.in);
+        System.out.print("Want to continue ... (1 - Yes, 0 - No) ");
+        return scannerForInt.nextInt();
+    }
+    public static String finalResult(String playerChoice, String computerChoice){
+        if (playerChoice.equals(ROCK))
+            return resultForPlayerChoiceRock(computerChoice);
+        else if (playerChoice.equals(SCISSORS))
+            return resultForPlayerChoiceScissors(computerChoice);
+        else return   resultForPlayerChoicePaper(computerChoice);
     }
 
 }
