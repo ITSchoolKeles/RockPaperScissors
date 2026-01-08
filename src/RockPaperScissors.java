@@ -15,32 +15,27 @@ public class RockPaperScissors {
     private static int victoryCount = 0;
     private static int loseCount = 0;
     private static int drawCount = 0;
-
+    private static final String[][] HISTORY = new String[3][10];
+    private static int currentAttempt = 0;// player choice, computer choice, result  recording
     public static void main(String[] args) {
-         int i = 1;
-
-        while (true) {
-            System.out.println("Current attempt is " + i);
-
-           String computerChoice = computerChoice();
-
-           String playerChoice = playerChoice();
-
-            if (playerChoice.equals(INVALID_CHOICE_NUMBER)) {
-                System.out.println("You have picked an invalid choice.");
-                return;
+  while (true) {
+            displayMainMenu();
+            Scanner input = new Scanner(System.in);
+            int menuChoice = input.nextInt();
+            if (menuChoice == 1) {
+                playGame();
+            } else if (menuChoice == 2) {
+                displayHistory();
+            } else {
+                System.out.println("You exit the program ➡️➡️➡️");
+                System.exit(0);
             }
-            String result = finalResult(playerChoice, computerChoice);
-
-            info(playerChoice, computerChoice, result);
-
-            int continueGame = continueTheGame();
-            if(continueGame == 0){
-                break;
-            }
-            i++;
+            if(currentAttempt == 10) break;
         }
         finalResultInfo();
+
+
+
     }
     public static String computerChoice(){
         int generatedRanNumber = random.nextInt(0, 3);
@@ -137,5 +132,47 @@ public class RockPaperScissors {
             return resultForPlayerChoiceScissors(computerChoice);
         else return   resultForPlayerChoicePaper(computerChoice);
     }
+    public static void displayHistory(){
+         for(int i = 0; i < currentAttempt; i++){
+             System.out.println("----------------------------------------------");
+             System.out.println("Attempt " + (i +1) );
+             System.out.println("Player choice -> " + HISTORY[0][i] );
+             System.out.println("Computer choice -> " + HISTORY[1][i] );
+             System.out.println("Result -> " + HISTORY[2][i] );
+         }
+    }
+    public static void displayMainMenu(){
+        System.out.println("1.Play the game ");
+        System.out.println("2.See the whole history");
+        System.out.println("3.See history by attempt number");
+        System.out.println("0.Quit the game ");
+        System.out.print("Choose the menu --> ");
+    }
+    public static void playGame(){
+            System.out.println("Current attempt is " + (currentAttempt+1));
 
-}
+            String computerChoice = computerChoice();
+            HISTORY[1][currentAttempt] = computerChoice;
+
+            String playerChoice = playerChoice();
+            HISTORY[0][currentAttempt] = playerChoice;
+
+
+            if (playerChoice.equals(INVALID_CHOICE_NUMBER)) {
+                System.out.println("You have picked an invalid choice.");
+                return;
+            }
+            String result = finalResult(playerChoice, computerChoice);
+            HISTORY[2][currentAttempt] = result;
+            currentAttempt ++;
+
+            info(playerChoice, computerChoice, result);
+
+            int continueGame = continueTheGame();
+            if (continueGame == 0) {
+                return;
+            }
+        }
+    }
+
+
